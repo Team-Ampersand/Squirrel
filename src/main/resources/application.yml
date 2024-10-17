@@ -1,0 +1,17 @@
+server:
+  port: 8081
+  shutdown: graceful
+spring:
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+  data:
+    mongodb:
+      database: ${DB_NAME:squirrel_db}
+      username: ${DB_USERNAME:root}
+      password: ${DB_PASSWORD:dotori01}
+      host: ${DB_HOST:localhost}
+      port: ${DB_PORT:27017}
+      auto-index-creation: true

@@ -2,7 +2,7 @@
 
 Squirrel - DOTORI Audit System
 
-<img src="img.png" width = 150px><img>
+<img src="./assets/img.png" width = 150px><img>
 
 
 ### Project Description

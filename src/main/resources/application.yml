@@ -9,9 +9,5 @@ spring:
       add-mappings: false
   data:
     mongodb:
-      database: ${DB_NAME:squirrel_db}
-      username: ${DB_USERNAME:root}
-      password: ${DB_PASSWORD:dotori01}
-      host: ${DB_HOST:localhost}
-      port: ${DB_PORT:27017}
-      auto-index-creation: true
+     uri: mongodb://localhost:27017/squirrel_db
+     auto-index-creation: true

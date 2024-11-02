@@ -2,13 +2,12 @@ package ampersand.squirrel.event
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
-import java.lang.IllegalStateException
 import java.time.LocalDateTime
 
-@Document
+@Document("dotori_event")
 class DotoriEvent(
     @Id
-    private val _id: String? = null,
+    val id: String? = null,
     val username: String,
     val createdYear: Int,
     val createdMonth: Int,
@@ -17,12 +16,7 @@ class DotoriEvent(
     val env: EventEnv,
     val activeType:  ActiveType,
     val eventType: EventType
-) {
-    val id: String
-        get() {
-            return id ?: throw IllegalStateException("Id Must not be null")
-        }
-}
+)
 
 enum class EventType(
     val description: String

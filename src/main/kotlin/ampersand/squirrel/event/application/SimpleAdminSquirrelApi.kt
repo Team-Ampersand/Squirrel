@@ -27,7 +27,7 @@ class SimpleAdminSquirrelApi(
         val musicPayload1 = MusicDotoriEventPayload(
             _id = "music_payload_id_value",
             musicTitle = "redoor - love scala",
-            eventId = musicEvent1.id
+            eventId = "music_id_value"
         )
 
         dotoriEventRepository.save(musicEvent1)

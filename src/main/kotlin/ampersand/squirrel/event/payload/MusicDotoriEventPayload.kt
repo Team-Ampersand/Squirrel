@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
 import java.lang.IllegalStateException
 
-@Document
+@Document("music_payload")
 class MusicDotoriEventPayload(
     @Id
     val _id: String? = null,

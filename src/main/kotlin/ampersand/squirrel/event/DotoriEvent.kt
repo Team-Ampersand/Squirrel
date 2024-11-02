@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 import java.lang.IllegalStateException
 import java.time.LocalDateTime
 
-@Document
+@Document("dotori_event")
 class DotoriEvent(
     @Id
     private val _id: String? = null,

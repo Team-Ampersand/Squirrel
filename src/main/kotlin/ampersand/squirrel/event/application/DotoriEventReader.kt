@@ -34,20 +34,23 @@ class DotoriEventReader(
             }
             else -> throw BasicException("Invalid EventType Request Music!", HttpStatus.BAD_REQUEST.value())
         }
-        val payloads = musicDotoriEventPayloadRepository.findAllByEventIdIn(musicLogs.map { it.id })
-        val musicLogMap = payloads.associateBy { it.eventId }
+
+        musicLogs.earlyReturnIfEmpty()
+
         val createTotal = musicLogs.count { event -> event.activeType == ActiveType.CREATE }
         val deleteTotal = musicLogs.count { event -> event.activeType == ActiveType.DELETE }
         val total = musicLogs.count()
+
         return musicLogs.mapIndexed { idx, event ->
             MusicDotoriEventResponse(
-                logId = event.id,
+                logId = event.id!!,
                 offset = idx + 1,
                 username = event.username,
                 createdAt = event.createdAt,
                 env = event.env,
                 activeType = event.activeType,
-                musicTitle = musicLogMap[event.id]!!.musicTitle,
+                musicTitle = musicDotoriEventPayloadRepository.findByEventId(event.id)?.musicTitle
+                    ?: throw BasicException("Not Found Music Payload", HttpStatus.NOT_FOUND.value()),
                 eventType = event.eventType,
                 createTotal = createTotal,
                 deleteTotal = deleteTotal,
@@ -77,13 +80,15 @@ class DotoriEventReader(
             else -> throw BasicException("Invalid EventType Request Reserve!", HttpStatus.BAD_REQUEST.value())
         }
 
+        reserveLogs.earlyReturnIfEmpty()
+
         val createTotal = reserveLogs.count { event -> event.activeType == ActiveType.CREATE }
         val deleteTotal = reserveLogs.count { event -> event.activeType == ActiveType.DELETE }
         val total = reserveLogs.count()
 
         return reserveLogs.mapIndexed { idx, event ->
             ReserveDotoriEventResponse(
-                logId = event.id,
+                logId = event.id!!,
                 offset = idx + 1,
                 username = event.username,
                 createdAt = event.createdAt,
@@ -95,5 +100,9 @@ class DotoriEventReader(
                 total = total
             )
         }
+    }
+
+    fun<T> List<T>?.earlyReturnIfEmpty(): ArrayList<T> {
+        return this?.let { ArrayList(it) } ?: ArrayList()
     }
 }

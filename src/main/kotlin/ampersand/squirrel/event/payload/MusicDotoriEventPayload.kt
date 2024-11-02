@@ -8,13 +8,8 @@ import java.lang.IllegalStateException
 @Document("music_payload")
 class MusicDotoriEventPayload(
     @Id
-    val _id: String? = null,
+    val id: String? = null,
     val musicTitle: String,
     @Indexed(unique = true)
     val eventId: String
-) {
-    val id: String
-        get() {
-            return id ?: throw IllegalStateException("Id Must not be null")
-        }
-}
+)

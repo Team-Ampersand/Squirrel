@@ -14,7 +14,7 @@ class SimpleAdminSquirrelApi(
 
     fun createEvent() {
         val musicEvent1 = DotoriEvent(
-            _id = "music_id_value",
+            id = "music_id_value",
             username = "hope",
             createdYear = 2024,
             createdMonth = 2,
@@ -25,7 +25,7 @@ class SimpleAdminSquirrelApi(
             eventType = EventType.MUSIC
         )
         val musicPayload1 = MusicDotoriEventPayload(
-            _id = "music_payload_id_value",
+            id = "music_payload_id_value",
             musicTitle = "redoor - love scala",
             eventId = "music_id_value"
         )

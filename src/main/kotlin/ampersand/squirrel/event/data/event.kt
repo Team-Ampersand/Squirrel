@@ -7,7 +7,6 @@ import java.time.LocalDateTime
 
 data class MusicDotoriEvent(
     val id: String,
-    val offset: Int,
     val username: String,
     val createdAt: LocalDateTime,
     val env: EventEnv,
@@ -18,7 +17,6 @@ data class MusicDotoriEvent(
 
 data class ReserveDotoriEvent(
     val id: String,
-    val offset: Int,
     val username: String,
     val createdAt: LocalDateTime,
     val env: EventEnv,

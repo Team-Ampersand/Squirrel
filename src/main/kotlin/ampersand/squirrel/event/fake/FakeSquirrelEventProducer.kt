@@ -1,7 +1,5 @@
 package ampersand.squirrel.event.fake
 
-import ampersand.squirrel.event.data.MusicDotoriEvent
-import ampersand.squirrel.event.data.ReserveDotoriEvent
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.awspring.cloud.sqs.operations.SendResult
 import io.awspring.cloud.sqs.operations.SqsTemplate
@@ -13,18 +11,10 @@ class FakeSquirrelEventProducer(
     private val sqsTemplate: SqsTemplate
 ) : EventProducer {
 
-    override fun publishMusicEvent(topic: String, event: MusicDotoriEvent): SendResult<String> {
+    override fun publishEvent(queue: String, event: Any): SendResult<String> {
         return sqsTemplate.send { sendOpsTo ->
             sendOpsTo
-                .queue("music-squirrel-event")
-                .payload(objectMapper.writeValueAsString(event))
-        }
-    }
-
-    override fun publishReserveEvent(topic: String, event: ReserveDotoriEvent): SendResult<String> {
-        return sqsTemplate.send { sendOpsTo ->
-            sendOpsTo
-                .queue("reserve-squirrel-event")
+                .queue(queue)
                 .payload(objectMapper.writeValueAsString(event))
         }
     }

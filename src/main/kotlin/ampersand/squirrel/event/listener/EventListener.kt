@@ -9,6 +9,7 @@ import io.awspring.cloud.sqs.listener.acknowledgement.Acknowledgement
 import org.springframework.messaging.MessageHeaders
 import org.springframework.messaging.handler.annotation.Headers
 import org.springframework.stereotype.Component
+import java.lang.IllegalArgumentException
 
 @Component
 class EventListener(
@@ -16,17 +17,24 @@ class EventListener(
     private val objectMapper: ObjectMapper
 ) {
 
-    @SqsListener(value = ["music-squirrel-event"])
-    fun musicListen(payload: String, @Headers headers: MessageHeaders, acknowledgement: Acknowledgement) {
-        val event = objectMapper.readValue(payload, MusicDotoriEvent::class.java)
-        eventProcessor.processMusicEvent(event)
-        acknowledgement.acknowledge()
-    }
+    @SqsListener(value = ["squirrel-sqs"])
+    fun listen(payload: String, @Headers headers: MessageHeaders, acknowledgement: Acknowledgement) {
 
-    @SqsListener(value = ["reserve-squirrel-event"])
-    fun reserveListen(payload: String, @Headers headers: MessageHeaders, acknowledgement: Acknowledgement) {
-        val event = objectMapper.readValue(payload, ReserveDotoriEvent::class.java)
-        eventProcessor.processReserveEvent(event)
+        when(headers["eventType"].toString()) {
+            "MUSIC" -> {
+                val event = objectMapper.readValue(payload, MusicDotoriEvent::class.java)
+                eventProcessor.processMusicEvent(event)
+            }
+
+            "RESERVE" -> {
+                val event = objectMapper.readValue(payload, ReserveDotoriEvent::class.java)
+                eventProcessor.processReserveEvent(event)
+            }
+
+            else -> {
+                throw IllegalArgumentException("Event Type is wrong!!")
+            }
+        }
         acknowledgement.acknowledge()
     }
 }

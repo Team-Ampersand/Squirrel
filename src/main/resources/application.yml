@@ -11,3 +11,10 @@ spring:
     mongodb:
      uri: mongodb://localhost:27017/squirrel_db
      auto-index-creation: true
+  cloud:
+    aws:
+      credentials:
+        access-key: ${ACCESS_KEY}
+        secret-key: ${SECRET_KEY}
+      region:
+        static: ap-northeast-2

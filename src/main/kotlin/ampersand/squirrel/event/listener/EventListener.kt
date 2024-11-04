@@ -1,6 +1,6 @@
 package ampersand.squirrel.event.listener
 
-import ampersand.squirrel.event.application.EventProcessor
+import ampersand.squirrel.event.component.EventProcessor
 import ampersand.squirrel.event.data.MusicDotoriEvent
 import ampersand.squirrel.event.data.ReserveDotoriEvent
 import com.fasterxml.jackson.databind.ObjectMapper

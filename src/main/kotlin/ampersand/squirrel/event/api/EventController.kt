@@ -1,8 +1,8 @@
-package ampersand.squirrel.event.controller
+package ampersand.squirrel.event.api
 
 import ampersand.squirrel.event.ActiveType
 import ampersand.squirrel.event.EventType
-import ampersand.squirrel.event.application.QueryDotoriEventService
+import ampersand.squirrel.event.component.QueryDotoriEventService
 import ampersand.squirrel.event.data.MusicLog
 import ampersand.squirrel.event.data.ReserveLog
 import org.springframework.format.annotation.DateTimeFormat

@@ -1,4 +1,4 @@
-package ampersand.squirrel.event.application
+package ampersand.squirrel.event.component
 
 import ampersand.squirrel.event.DotoriEvent
 import ampersand.squirrel.event.DotoriEventRepository

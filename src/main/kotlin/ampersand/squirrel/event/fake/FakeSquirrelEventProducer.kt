@@ -11,10 +11,10 @@ class FakeSquirrelEventProducer(
     private val sqsTemplate: SqsTemplate
 ) : EventProducer {
 
-    override fun publishEvent(queue: String, event: Any, eventType: String): SendResult<String> {
+    override fun publishEvent(event: Any, eventType: String): SendResult<String> {
         return sqsTemplate.send { sendOpsTo ->
             sendOpsTo
-                .queue(queue)
+                .queue("squirrel-sqs")
                 .header("eventType", eventType)
                 .payload(objectMapper.writeValueAsString(event))
         }

@@ -16,4 +16,4 @@ DOTORI(dev, prod)에서 발생한 log event payload, metric들을 조회할 수 
 
 ### Event Flow
 
-![img.png](assets/img.png)![]()
+![img.png](assets/img.png)

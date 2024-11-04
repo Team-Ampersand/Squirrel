@@ -25,7 +25,7 @@ class SimpleAdminSquirrelEventProduceApi(
             eventType = EventType.MUSIC,
             musicTitle = "redoor love scala"
         )
-        eventProducer.publishEvent(event, "MUSIC")
+        eventProducer.publishEvent(event,"MUSIC")
     }
 
     fun simpleReserveEvent() {
@@ -37,6 +37,6 @@ class SimpleAdminSquirrelEventProduceApi(
             activeType = ActiveType.CREATE,
             eventType = EventType.MUSIC,
         )
-        eventProducer.publishEvent(event, "RESERVE")
+        eventProducer.publishEvent(event,"RESERVE")
     }
 }

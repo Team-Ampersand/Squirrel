@@ -26,7 +26,7 @@ class AdminController(
         return ResponseEntity.ok().build()
     }
 
-    @GetMapping("/music-event")
+    @GetMapping("/reserve-event")
     fun produceReserveEventTrigger(): ResponseEntity<Void> {
         simpleAdminSquirrelEventProduceApi.simpleReserveEvent()
         return ResponseEntity.ok().build()

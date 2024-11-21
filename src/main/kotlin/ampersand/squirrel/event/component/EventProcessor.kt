@@ -25,6 +25,7 @@ class EventProcessor(
             throw BasicException("Can't save an event Because Type of Event is not Music or Like", HttpStatus.BAD_REQUEST.value())
 
         val dotoriEvent = DotoriEvent(
+            id = event.id,
             username = event.username,
             createdAt = event.createdAt,
             createdYear = event.createdAt.year,
@@ -48,6 +49,7 @@ class EventProcessor(
             throw BasicException("Can't save an event Because Type of Event is not Music or Like", HttpStatus.BAD_REQUEST.value())
 
         val dotoriEvent = DotoriEvent(
+            id = event.id,
             username = event.username,
             createdAt = event.createdAt,
             createdYear = event.createdAt.year,

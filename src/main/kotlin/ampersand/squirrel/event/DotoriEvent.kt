@@ -36,5 +36,5 @@ enum class ActiveType(
     val description: String
 ) {
     CREATE("생성 연산"),
-    DELETE("삭제 연ㅇ산")
+    DELETE("삭제 연산")
 }

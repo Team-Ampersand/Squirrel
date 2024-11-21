@@ -20,15 +20,11 @@ class DotoriEventReader(
 
     fun queryMusicEvent(eventType: EventType, date: LocalDate, activeType: ActiveType?): List<MusicDotoriEventResponse> {
         val musicLogs = when(eventType) {
-            EventType.MUSIC -> {
-                dotoriEventRepository.findMusicLog(date.year, date.monthValue, date.dayOfMonth, activeType)
-            }
-            EventType.LIKE -> {
-                dotoriEventRepository.findLikeLog(date.year, date.monthValue, date.dayOfMonth, activeType)
-            }
+            EventType.MUSIC -> fetchMusicLogs(date, activeType)
+            EventType.LIKE -> fetchLikeLogs(date, activeType)
             EventType.MUSIC_ALL -> {
-                val music = dotoriEventRepository.findMusicLog(date.year, date.monthValue, date.dayOfMonth, activeType)
-                val like = dotoriEventRepository.findLikeLog(date.year, date.monthValue, date.dayOfMonth, activeType)
+                val music = fetchMusicLogs(date, activeType)
+                val like = fetchLikeLogs(date, activeType)
                 union(music, like)
             }
             else -> throw BasicException("Invalid EventType Request Music!", HttpStatus.BAD_REQUEST.value())
@@ -58,6 +54,19 @@ class DotoriEventReader(
         }
     }
 
+    private fun fetchMusicLogs(date: LocalDate, activeType: ActiveType?): List<DotoriEvent> {
+        return activeType?.let {
+            dotoriEventRepository.findMusicLogWithActiveType(date.year, date.monthValue, date.dayOfMonth, it)
+        } ?: dotoriEventRepository.findMusicLogWithoutActiveType(date.year, date.monthValue, date.dayOfMonth)
+    }
+
+    private fun fetchLikeLogs(date: LocalDate, activeType: ActiveType?): List<DotoriEvent> {
+        return activeType?.let {
+            dotoriEventRepository.findLikeLogWithActiveType(date.year, date.monthValue, date.dayOfMonth, it)
+        } ?: dotoriEventRepository.findLikeLogWithoutActiveType(date.year, date.monthValue, date.dayOfMonth)
+    }
+
+
     private fun union(music: List<DotoriEvent>, like: List<DotoriEvent>): List<DotoriEvent> {
         val result = music + like
         return result.sortedBy { it.createdAt }
@@ -65,15 +74,11 @@ class DotoriEventReader(
 
     fun queryReserveEvent(eventType: EventType, date: LocalDate, activeType: ActiveType?): List<ReserveDotoriEventResponse> {
         val reserveLogs = when(eventType) {
-            EventType.SELFSTUDY -> {
-                dotoriEventRepository.findSelfStudyLog(date.year, date.monthValue, date.dayOfMonth, activeType)
-            }
-            EventType.LIKE -> {
-                dotoriEventRepository.findMassageLog(date.year, date.monthValue, date.dayOfMonth, activeType)
-            }
+            EventType.SELFSTUDY -> fetchSelfStudyLogs(date, activeType)
+            EventType.MASSAGE -> fetchMassageLogs(date, activeType)
             EventType.RESERVE_ALL -> {
-                val selfStudy = dotoriEventRepository.findSelfStudyLog(date.year, date.monthValue, date.dayOfMonth, activeType)
-                val massage = dotoriEventRepository.findSelfStudyLog(date.year, date.monthValue, date.dayOfMonth, activeType)
+                val selfStudy = fetchSelfStudyLogs(date, activeType)
+                val massage = fetchMassageLogs(date, activeType)
                 union(selfStudy, massage)
             }
             else -> throw BasicException("Invalid EventType Request Reserve!", HttpStatus.BAD_REQUEST.value())
@@ -101,7 +106,20 @@ class DotoriEventReader(
         }
     }
 
+    private fun fetchSelfStudyLogs(date: LocalDate, activeType: ActiveType?): List<DotoriEvent> {
+        return activeType?.let {
+            dotoriEventRepository.findSelfStudyLogsWithActiveType(date.year, date.monthValue, date.dayOfMonth, it)
+        } ?: dotoriEventRepository.findSelfStudyLogsWithoutActiveType(date.year, date.monthValue, date.dayOfMonth)
+    }
+
+    private fun fetchMassageLogs(date: LocalDate, activeType: ActiveType?): List<DotoriEvent> {
+        return activeType?.let {
+            dotoriEventRepository.findMassageLogsWithActiveType(date.year, date.monthValue, date.dayOfMonth, it)
+        } ?: dotoriEventRepository.findMassageLogsWithoutActiveType(date.year, date.monthValue, date.dayOfMonth)
+    }
+
     fun<T> List<T>?.earlyReturnIfEmpty(): ArrayList<T> {
         return this?.let { ArrayList(it) } ?: ArrayList()
     }
+
 }

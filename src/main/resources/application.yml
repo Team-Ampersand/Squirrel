@@ -9,10 +9,7 @@ spring:
       add-mappings: false
   data:
     mongodb:
-      uri: mongodb://127.0.0.1:27017/squirrel_db
-      auto-index-creation: true
-      username: ${MONGO_DB_USER}
-      password: ${MONGO_DB_PASSWORD}
+      uri: ${MONGO_URI}
   cloud:
     aws:
       credentials:

@@ -12,6 +12,3 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=dotori # 배포환경에서 변경해서 사용하기
 volumes:
   data: {}
-networks:
-  default:
-    name: mongodb_network
